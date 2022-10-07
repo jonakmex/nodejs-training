@@ -4,12 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cucumber-js"
+    "test-bdd": "tsc && cucumber-js ./tests/features/ -p default"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonakmex/nodejs-training.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonakmex/nodejs-training/issues"
+  },
+  "homepage": "https://github.com/jonakmex/nodejs-training#readme",
   "devDependencies": {
-    "@cucumber/cucumber": "^8.6.0"
+    "@cucumber/cucumber": "^8.6.0",
+    "@types/chai": "^4.3.3",
+    "chai": "^4.3.6"
   }
 }
