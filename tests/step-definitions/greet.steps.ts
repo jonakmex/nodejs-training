@@ -1,16 +1,27 @@
-import {Given, When, Then} from '@cucumber/cucumber';
+import {Before,Given, When, Then} from '@cucumber/cucumber';
 import { assert } from 'chai';
-import {Greet} from '../../src/usecases/Greet';
+import { RequestFactoryMock } from './support/RequestFactoryMock';
+import { UseCaseFactoryMock } from './support/UseCaseFactoryMock';
+
+Before(function () {
+   let useCaseFactory = new UseCaseFactoryMock(); 
+   this.usecase = useCaseFactory.make("GreetUseCase");
+   this.requestFactory = new RequestFactoryMock();
+});
 
 Given('guest user', function () {
-    this.usecase = new Greet();
-    this.name = '';
+    let request = this.requestFactory.make('GreetRequest',new Map<string,any>([
+        ["name", ""]
+    ]));
+
+    this.request = request;
 });
 
 When('User Greets', function () {
-    this.greeting = this.usecase.sayHello('');
+    let response = this.usecase.execute(this.request);
+    this.greeting = response.greeting;
 });
 
 Then('Say Hello World', function () {
-   assert.equal(this.greeting, 'Hello Empty');
+   assert.equal(this.greeting, 'Hello World');
 });
