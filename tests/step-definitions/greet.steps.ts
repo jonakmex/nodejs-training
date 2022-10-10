@@ -2,11 +2,17 @@ import {Before,Given, When, Then} from '@cucumber/cucumber';
 import { assert } from 'chai';
 import { RequestFactoryMock } from './support/RequestFactoryMock';
 import { UseCaseFactoryMock } from './support/UseCaseFactoryMock';
+import "reflect-metadata";
+import {container} from "tsyringe";
+import { GreetRepositoryMock } from './support/GreetRepositoryMock';
 
 Before(function () {
-   let useCaseFactory = new UseCaseFactoryMock(); 
+   let useCaseFactory = container.resolve(UseCaseFactoryMock); 
+   this.requestFactory = container.resolve(RequestFactoryMock); 
+   container.register("GreetRepository",{
+    useClass : GreetRepositoryMock
+   });
    this.usecase = useCaseFactory.make("GreetUseCase");
-   this.requestFactory = new RequestFactoryMock();
 });
 
 Given('guest user', function () {
